@@ -1,23 +1,13 @@
 package gui
 
 import (
-	"MidiReader/internal/utils/getFiles"
 	"fmt"
 	"os"
 	"os/exec"
 	"strings"
 )
 
-func ShowMidi() string {
-	midiNames, err := getFiles.GetFiles("/dev", "midi")
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-
-	title := "MIDI devices"
-	column := "Device"
-
+func ShowSelect(elements []string, title, column string) string {
 	cmd := exec.Command(
 		"zenity",
 		"--list",
@@ -25,7 +15,7 @@ func ShowMidi() string {
 		"--title="+title,
 	)
 
-	for _, name := range midiNames {
+	for _, name := range elements {
 		cmd.Args = append(cmd.Args, name)
 	}
 
